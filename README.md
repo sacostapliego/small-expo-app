@@ -5,6 +5,7 @@ This is just a quick way to showcase Expo
 ## Prerequisites
 - NodeJs
 - Expo Go on your phone (optional)
+- xCode for ios simulator
 
 ## How to Run
 Clone this repo, and create a .env file and place the following inside
