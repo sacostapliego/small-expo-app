@@ -10,7 +10,7 @@ This is just a quick way to showcase Expo
 Clone this repo, and create a .env file and place the following inside
 
 ```bash
-GEMINI_API_KEY= [the api key I sent in discord]
+EXPO_PUBLIC_GEMINI_API_KEY=[the api key I sent in discord]
 ```
 
 Than in the terminal run

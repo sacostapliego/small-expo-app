@@ -1,9 +1,9 @@
-import { GEMINI_API_KEY } from '@env'; // Import the API key
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+const GEMINI_API_KEY  = process.env.EXPO_PUBLIC_GEMINI_API_KEY!;
 
 export default function ChatbotScreen() {
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hi! Ask me anything!' }]);
