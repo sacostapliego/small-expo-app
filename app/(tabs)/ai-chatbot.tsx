@@ -6,6 +6,7 @@ import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 const GEMINI_API_KEY  = process.env.EXPO_PUBLIC_GEMINI_API_KEY!;
 
 export default function ChatbotScreen() {
+  // React state for messages and input
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'Hi! Ask me anything!' }]);
   const [input, setInput] = useState('');
 
@@ -16,20 +17,23 @@ export default function ChatbotScreen() {
     setMessages(newMessages);
     setInput('');
 
+    // Gemini API endpoint and model
     const model = 'gemini-2.5-flash'
     const API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-
+    // Call the Gemini API
     try {
       const response = await axios.post(
         API_ENDPOINT,
         {
+          // Gemini API request payload
           contents: [{ role: 'user', parts: [{ text: input }] }],
         },
         {
           params: {
             key: GEMINI_API_KEY,
           },
+          // Gemini API request headers
           headers: {
             'Content-Type': 'application/json',
           },
@@ -46,6 +50,7 @@ export default function ChatbotScreen() {
     }
   };
 
+  // Actually rendering the chatbot screen
   return (
     <View style={styles.container}>
       <FlatList
@@ -72,6 +77,7 @@ export default function ChatbotScreen() {
   );
 }
 
+// Styles for the chatbot screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
