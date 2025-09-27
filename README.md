@@ -4,23 +4,23 @@ This is just a quick way to showcase Expo
 
 ## Prerequisites
 - NodeJs
-- Expo on your phone (optional)
+- Expo Go on your phone (optional)
 
 ## How to Run
 Clone this repo, and create a .env file and place the following inside
 
 ```bash
-DB_PASSWORD=[your mysql password]
-DB_NAME=employeeData (or what you called your database)
+GEMINI_API_KEY= [the api key I sent in discord]
 ```
 
-Than in the terminal
+Than in the terminal run
 ```bash
+npm i
 npx expo start
 ```
 
-For web either press ***w*** or go to http://localhost:8081
+For web either type ***w*** in the terminal or go to http://localhost:8081
 
-For ios either press **i** to open the ios simulator or scan the qr code (you need the app for that)
+For ios either type **i** in the terminal to open the ios simulator or scan the qr code (you need the app for that)
 
-I have not tried it on andriod, it might be similar 
+I am not sure how it works on andriod, it might be similar with typing a
