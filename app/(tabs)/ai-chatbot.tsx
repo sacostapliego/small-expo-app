@@ -1,3 +1,4 @@
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -6,6 +7,9 @@ import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 const GEMINI_API_KEY  = process.env.EXPO_PUBLIC_GEMINI_API_KEY!;
 
 export default function ChatbotScreen() {
+  const colorScheme = useColorScheme();
+  const backgroundColor = colorScheme === 'dark' ? '#1c1c1e' : '#f2f2f7';
+
   // Demo messages - fixed for screenshots, but you can still add more
   const [messages, setMessages] = useState([
     { sender: 'bot', text: 'Hi! Ask me anything!' },
@@ -57,8 +61,8 @@ export default function ChatbotScreen() {
   const renderMessage = ({ item }: { item: { sender: string; text: string } }) => {
     if (item.sender === 'bot' && item.text === 'locations') {
       return (
-        <View style={styles.botMessage}>
-          <Text style={styles.botText}>
+        <View style={[styles.botMessage, { backgroundColor: colorScheme === 'dark' ? '#EAEAEA' : '#e6e5eb' }]}>
+          <Text style={[styles.botText, { color: colorScheme === 'dark' ? '#000' : '#000' }]}>
             I found 2 local vendors that sell Roma Tomatoes based on your location of Downtown Atlanta:
           </Text>
           
@@ -76,17 +80,17 @@ export default function ChatbotScreen() {
     }
 
     return (
-      <Text style={item.sender === 'user' ? styles.userMessage : styles.botMessage}>
+      <Text style={item.sender === 'user' ? styles.userMessage : [styles.botMessage, { backgroundColor: colorScheme === 'dark' ? '#EAEAEA' : '#e6e5eb', color: colorScheme === 'dark' ? '#000' : '#000' }]}>
         {item.text}
       </Text>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       {/* Settings Icon */}
       <TouchableOpacity style={styles.settingsButton}>
-        <FontAwesome name="gear" size={24} color="white" />
+        <FontAwesome name="gear" size={24} color={colorScheme === 'dark' ? 'white' : 'black'} />
       </TouchableOpacity>
     
       {/* Chat Messages */}
@@ -98,11 +102,11 @@ export default function ChatbotScreen() {
       {/* Input Section */}
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: colorScheme === 'dark' ? 'white' : 'black' }]}
           value={input}
           onChangeText={setInput}
           placeholder="Type your message..."
-          placeholderTextColor="#999"
+          placeholderTextColor={colorScheme === 'dark' ? '#888' : '#393939'}
         />
         <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
           <FontAwesome name="send" size={20} color="black" />
@@ -127,7 +131,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'rgba(21, 21, 21, 1)',
     paddingTop: 100,
   },
   settingsButton: {
@@ -147,14 +150,12 @@ const styles = StyleSheet.create({
   },
   botMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#EAEAEA',
     padding: 10,
     borderRadius: 8,
     marginVertical: 8,
     maxWidth: '80%',
   },
   botText: {
-    color: '#000',
     marginBottom: 8,
   },
   vendorLink: {
@@ -188,7 +189,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     marginRight: 8,
-    color: 'white',
   },
   sendButton: {
     backgroundColor: '#ffffff',

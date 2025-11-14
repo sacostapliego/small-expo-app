@@ -24,7 +24,7 @@ export default function RootLayout() {
             headerBackTitle: 'Home',
             headerTintColor: '#225832',
             headerStyle: {
-              backgroundColor: 'rgba(21, 21, 21, 1)',
+              backgroundColor: colorScheme === 'dark' ? '#1c1c1e' : '#f2f2f7',
             },
             headerShadowVisible: false,
           }} 

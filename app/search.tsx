@@ -1,3 +1,4 @@
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image } from 'expo-image';
 import { useState } from 'react';
@@ -5,6 +6,8 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SearchScreen() {
+  const colorScheme = useColorScheme();
+  const backgroundColor = colorScheme === 'dark' ? '#1c1c1e' : '#f2f2f7';
   const [searchText, setSearchText] = useState('Carrots');
   const [selectedFilters, setSelectedFilters] = useState<number[]>([]);
 
@@ -40,14 +43,17 @@ export default function SearchScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['bottom']}>
-      <View style={styles.container}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor }]} edges={['bottom']}>
+      <View style={[styles.container, { backgroundColor }]}>
         {/* Search Bar */}
         <View style={styles.searchBarContainer}>
-          <View style={styles.searchBar}>
+          <View style={[styles.searchBar, { backgroundColor: colorScheme === 'dark' ? 'rgba(30, 30, 30, 1)' : '#e6e5eb' }]}>
             <FontAwesome name="search" size={20} color="#999" style={styles.searchIcon} />
             <TextInput
-              style={styles.searchInput}
+              style={[styles.searchInput, { 
+                backgroundColor: colorScheme === 'dark' ? 'rgba(40, 40, 40, 1)' : '#fff',
+                color: colorScheme === 'dark' ? '#fff' : '#000'
+              }]}
               placeholder="Search for produce..."
               placeholderTextColor="#999"
               value={searchText}
@@ -64,28 +70,30 @@ export default function SearchScreen() {
 
         {/* Results Header */}
         <View style={styles.resultsHeaderContainer}>
-          <View style={styles.resultsHeader}>
-            <Text style={styles.resultsText}>
+          <View style={[styles.resultsHeader, { backgroundColor: colorScheme === 'dark' ? 'rgba(30, 30, 30, 1)' : '#e6e5eb' }]}>
+            <Text style={[styles.resultsText, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}>
               Found {mockResults.length} results for "{searchText}"
             </Text>
           </View>
         </View>
 
         {/* Filters */}
-        <View style={styles.filtersSection}>
-          <Text style={styles.filtersTitle}>Filters</Text>
+        <View style={[styles.filtersSection, { backgroundColor }]}>
+          <Text style={[styles.filtersTitle, { color: colorScheme === 'dark' ? '#999' : '#666' }]}>Filters</Text>
           <View style={styles.filtersContainer}>
             {filters.map((filter) => (
               <Pressable
                 key={filter.id}
                 style={[
                   styles.filterChip,
+                  { backgroundColor: colorScheme === 'dark' ? 'rgba(30, 30, 30, 1)' : '#e6e5eb' },
                   selectedFilters.includes(filter.id) && styles.filterChipActive
                 ]}
                 onPress={() => toggleFilter(filter.id)}
               >
                 <Text style={[
                   styles.filterChipText,
+                  { color: colorScheme === 'dark' ? '#999' : '#666' },
                   selectedFilters.includes(filter.id) && styles.filterChipTextActive
                 ]}>
                   {filter.label}
@@ -103,7 +111,7 @@ export default function SearchScreen() {
           {mockResults.map((item) => (
             <Pressable 
               key={item.id} 
-              style={styles.resultCard}
+              style={[styles.resultCard, { backgroundColor: colorScheme === 'dark' ? 'rgba(30, 30, 30, 1)' : '#e6e5eb' }]}
               onPress={() => {/* Demo - no action */}}
             >
               {item.imageUrl ? (
@@ -117,7 +125,7 @@ export default function SearchScreen() {
                 </View>
               )}
               <View style={styles.resultInfo}>
-                <Text style={styles.vendorName}>{item.vendorName}</Text>
+                <Text style={[styles.vendorName, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}>{item.vendorName}</Text>
                 <View style={styles.metaRow}>
                   <View style={styles.metaItem}>
                     <FontAwesome name="clock-o" size={11} color="#999" />
@@ -141,11 +149,9 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: 'rgba(21, 21, 21, 1)',
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(21, 21, 21, 1)',
   },
   searchBarContainer: {
     paddingHorizontal: 16,
@@ -156,7 +162,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: 'rgba(30, 30, 30, 1)',
     borderRadius: 12,
   },
   searchIcon: {
@@ -166,9 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: 'rgba(40, 40, 40, 1)',
     borderRadius: 8,
-    color: '#fff',
     fontSize: 15,
   },
   searchButton: {
@@ -190,21 +193,17 @@ const styles = StyleSheet.create({
   resultsHeader: {
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: 'rgba(30, 30, 30, 1)',
     borderRadius: 12,
   },
   resultsText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },
   filtersSection: {
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: 'rgba(21, 21, 21, 1)',
   },
   filtersTitle: {
-    color: '#999',
     fontSize: 12,
     fontWeight: '600',
     marginBottom: 8,
@@ -221,14 +220,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 12,
     paddingVertical: 8,
-    backgroundColor: 'rgba(30, 30, 30, 1)',
     borderRadius: 12,
   },
   filterChipActive: {
     // Keep the same background for active state
   },
   filterChipText: {
-    color: '#999',
     fontSize: 13,
     fontWeight: '500',
   },
@@ -247,7 +244,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 14,
     marginBottom: 12,
-    backgroundColor: 'rgba(30, 30, 30, 1)',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -273,7 +269,6 @@ const styles = StyleSheet.create({
   vendorName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
     marginBottom: 8,
   },
   metaRow: {
