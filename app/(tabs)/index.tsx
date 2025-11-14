@@ -1,15 +1,20 @@
 import { Image } from 'expo-image';
-import { StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
-      <Image
-        source={{
-          uri: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/one-banana-michael-h.jpg',
-        }}
-        style={styles.foodImage}
-      />
+      <Pressable onPress={() => router.push('/search')}>
+        <Image
+          source={{
+            uri: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/one-banana-michael-h.jpg',
+          }}
+          style={styles.foodImage}
+        />
+      </Pressable>
     </View>
   );
 }
@@ -22,8 +27,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   foodImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
   },
 });
